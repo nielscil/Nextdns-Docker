@@ -30,12 +30,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Login to DockerHub
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@master
-        with:
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.PAT }}
       - name: Build
         uses: docker/build-push-action@master
         env:
@@ -46,15 +40,5 @@ jobs:
           platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v6,linux/386
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            zydou/${{ github.workflow }}:${{ env.date }}
-            zydou/${{ github.workflow }}:latest
-            ghcr.io/zydou/${{ github.workflow }}:${{ env.date }}
-            ghcr.io/zydou/${{ github.workflow }}:latest
-      - name: Docker Hub Description
-        uses: peter-evans/dockerhub-description@main
-        with:
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.PAT }}
-          repository: ${{ github.repository_owner }}/${{ github.workflow }}
-          short-description: "Dockerized NextDNS client based on alpine"
-          readme-filepath: ${{ github.workflow }}/README.md
+            ghcr.io/nielscil/${{ github.workflow }}:${{ env.date }}
+            ghcr.io/nielscil/${{ github.workflow }}:latest
