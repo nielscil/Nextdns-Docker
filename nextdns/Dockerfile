@@ -11,5 +11,5 @@ FROM alpine
 ENV NEXTDNS_ARGUMENTS="-listen :5353 -report-client-info -log-queries -cache-size 10MB -max-ttl 5s"
 ENV NEXTDNS_ID=abcdef
 COPY --from=builder /go/bin/nextdns /usr/bin
-EXPOSE 5353/udp
+EXPOSE 53/udp
 CMD /usr/bin/nextdns run ${NEXTDNS_ARGUMENTS} -config ${NEXTDNS_ID}
